@@ -1,8 +1,10 @@
 import {PDFDocument, StandardFonts, rgb, degrees} from 'pdf-lib';
-import * as pdfjs from 'pdfjs-dist';
-import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
+import PDFWorker from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?worker&inline';
 import {carrierOf,findExisting,defaultOverlay} from './core.js';
-pdfjs.GlobalWorkerOptions.workerSrc=workerUrl;
+// Bundle the worker with the app. A separate .mjs request can fail on private
+// static hosts, leaving PDF.js unable to load its fallback worker as well.
+pdfjs.GlobalWorkerOptions.workerPort=new PDFWorker();
 export const pdfOptions={cMapUrl:'/cmaps/',cMapPacked:true,standardFontDataUrl:'/standard_fonts/',wasmUrl:'/wasm/'};
 let metrics;
 export async function getMetrics() {

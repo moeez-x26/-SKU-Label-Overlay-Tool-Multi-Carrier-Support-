@@ -50,6 +50,17 @@ The app runs at `http://127.0.0.1:5173` (or the next available port). Keep the t
 
 PDF fonts and supporting resources are prepared locally before launch, so label rendering does not rely on an external CDN.
 
+If you are starting from a downloaded ZIP on Windows:
+
+1. Install the LTS version of Node.js from <https://nodejs.org/>.
+2. On GitHub, choose **Code → Download ZIP**, then **Extract All**.
+3. Open the extracted folder containing `package.json` and double-click `start-local.bat`.
+4. Leave the command window open while using the app. Later, double-click the same file to start it again.
+
+To start from Command Prompt instead, open that folder in File Explorer, type `cmd` in its address bar, press Enter, then run `npm ci` followed by `npm start`.
+
+PDF.js's worker is bundled into the production app rather than fetched as a separate `.mjs` asset. Download a fresh ZIP to get fixes; an older extracted folder will keep its older code.
+
 For development and verification:
 
 ```sh
