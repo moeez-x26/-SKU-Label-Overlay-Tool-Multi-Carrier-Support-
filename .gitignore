@@ -7,3 +7,6 @@ coverage/
 *.csv
 *.xlsx
 *.labelstudio
+public/cmaps/
+public/standard_fonts/
+public/wasm/

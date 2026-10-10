@@ -26,14 +26,31 @@ Processing runs in the browser. There is no file upload endpoint, backend databa
 
 The app uses PDF.js for extraction and preview, PDF-LIB for export, and ExcelJS for XLSX parsing. Matching is deterministic rather than generative, so an uncertain match cannot invent a SKU.
 
-## Start locally
+## Run locally — no hosting account required
 
-Use Node.js 22.22+ (or a newer supported LTS).
+Install Node.js **22.22+** (or a newer LTS release), then download/clone this repository and open a terminal in its folder.
+
+First-time setup:
 
 ```sh
 npm ci
-npm run dev
 ```
+
+Start the app and automatically open your browser:
+
+```sh
+npm start
+```
+
+The app runs at `http://127.0.0.1:5173` (or the next available port). Keep the terminal open; press **Ctrl+C** to stop it. Dependencies are downloaded during first setup; processing requires no API key or paid service.
+
+**Windows:** double-click `start-local.bat`. It installs dependencies if needed, starts the app and opens the browser.
+
+**macOS/Linux:** run `bash start-local.sh` from the downloaded repository folder.
+
+PDF fonts and supporting resources are prepared locally before launch, so label rendering does not rely on an external CDN.
+
+For development and verification:
 
 ```sh
 npm test
