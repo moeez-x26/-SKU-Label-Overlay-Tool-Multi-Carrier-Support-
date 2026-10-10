@@ -1,4 +1,5 @@
 import './style.css';
+import {version} from '../package.json';
 import {fields,detectMapping,parseCSV,tableFromRows,groupOrders,matchPage,skuText,normal,sameItems,parseSkuLines,applyDuplicateGuard,escapeHTML as esc,layoutKey,auditCSV} from './core.js';
 import {readPDF,renderPage,getMetrics,textLayout,boundsError,placementWarning,suggestPosition,exportPDF,existingBoxes} from './pdf.js';
 
@@ -6,7 +7,7 @@ const $=s=>document.querySelector(s);
 const state={table:null,mapping:{},groups:[],pages:[],doc:null,bytes:null,index:0,fonts:null,filter:'all',search:'',scale:1.5,busy:false,history:[],renderToken:0,labelsName:'',ordersName:'',workbook:null};
 const icon={upload:'↑',download:'↓',chevron:'→'};
 $('#app').innerHTML=`
-<header class="topbar"><a class="brand" href="/" aria-label="SKU Label Studio home"><span class="brand-mark">▤</span><span>SKU Label <b>Studio</b></span><span class="version">1.0</span></a><span class="private-badge"><i></i> Files stay in your browser</span><button class="quiet" id="helpBtn">How it works</button></header>
+<header class="topbar"><a class="brand" href="/" aria-label="SKU Label Studio home"><span class="brand-mark">▤</span><span>SKU Label <b>Studio</b></span><span class="version">${version}</span></a><span class="private-badge"><i></i> Files stay in your browser</span><button class="quiet" id="helpBtn">How it works</button></header>
 <main>
 <section class="intro"><div><div class="eyebrow">YOUR DISPATCH WORKSPACE</div><h1>The right SKU.<br><span>On the right label.</span></h1><p>Match your orders, make a few adjustments, and get your labels ready to print.</p></div><div class="intro-note"><span class="note-icon">✓</span><div><strong>Built for everyday dispatch</strong><p>Evri, Royal Mail, Yodel and other carriers.<br>Multiple SKUs. One parcel. All accounted for.</p></div></div></section>
 <section class="upload-grid" aria-label="Upload your files">

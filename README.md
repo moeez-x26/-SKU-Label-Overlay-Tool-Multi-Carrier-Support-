@@ -59,7 +59,9 @@ If you are starting from a downloaded ZIP on Windows:
 
 To start from Command Prompt instead, open that folder in File Explorer, type `cmd` in its address bar, press Enter, then run `npm ci` followed by `npm start`.
 
-PDF.js's worker is bundled into the production app rather than fetched as a separate `.mjs` asset. Download a fresh ZIP to get fixes; an older extracted folder will keep its older code.
+PDF.js's parser is bundled directly into the app and can load labels without a separate worker download or browser Worker support. The browser paints progress between pages; large batches can take longer because parsing runs on the main thread. Download a fresh ZIP to get fixes; an older extracted folder will keep its older code.
+
+If an already open hosted tab reports a missing `pdf.worker` file, close that tab and reopen the hosted app, or press **Ctrl+Shift+R** to reload it. Version **1.0.2** appears beside the app name in the corrected build. Save any current project before reloading.
 
 For development and verification:
 

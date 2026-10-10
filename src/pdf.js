@@ -1,10 +1,13 @@
 import {PDFDocument, StandardFonts, rgb, degrees} from 'pdf-lib';
 import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
-import PDFWorker from 'pdfjs-dist/legacy/build/pdf.worker.min.mjs?worker&inline';
+import {WorkerMessageHandler} from 'pdfjs-dist/legacy/build/pdf.worker.mjs';
 import {carrierOf,findExisting,defaultOverlay} from './core.js';
-// Bundle the worker with the app. A separate .mjs request can fail on private
-// static hosts, leaving PDF.js unable to load its fallback worker as well.
-pdfjs.GlobalWorkerOptions.workerPort=new PDFWorker();
+// Register PDF.js's parser in this bundle. Its supported main-thread mode
+// then needs neither a separate worker URL nor a blob/data worker permitted
+// by the host's CSP. This also prevents the fallback from importing a missing
+// asset after a deployment or when browser workers are unavailable.
+globalThis.pdfjsWorker={WorkerMessageHandler};
+pdfjs.GlobalWorkerOptions.workerPort=null;
 export const pdfOptions={cMapUrl:'/cmaps/',cMapPacked:true,standardFontDataUrl:'/standard_fonts/',wasmUrl:'/wasm/'};
 let metrics;
 export async function getMetrics() {
@@ -24,6 +27,8 @@ export async function readPDF(bytes,onProgress=()=>{}) {
   const text=content.items.map(i=>i.str||'').join('\n');
   const page={index:i,proxy,viewport,width:viewport.width,height:viewport.height,items,text,carrier:carrierOf(text),existing:findExisting(items),match:{status:'review',reason:'Upload and match the order sheet',groupId:null,candidates:[]}};
   page.overlay=defaultOverlay(page); pages.push(page); onProgress(i+1,doc.numPages);
+  // Let the browser paint progress between pages when parsing on this thread.
+  await new Promise(resolve=>setTimeout(resolve,0));
  }
  return {doc,pages};
 }
